@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Our 2026 Journey</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .scroll-card {
+        max-height: 75vh; /* controls visible height */
+        overflow-y: auto;
+        padding-right: 8px; /* avoids scrollbar overlap */
+        scrollbar-width: thin; /* Firefox */
+      }
+
+      /* Optional: subtle scrollbar for Chrome */
+      .scroll-card::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scroll-card::-webkit-scrollbar-thumb {
+        background: rgba(255, 75, 43, 0.3);
+        border-radius: 10px;
+      }
+
+      :root {
+        --primary-pink: #ff758c;
+        --deep-red: #ff4b2b;
+        --soft-white: #fff5f5;
+        --gold: #f1c40f;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+        background: var(--soft-white);
+        color: #333;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Dancing Script", cursive;
+        color: var(--deep-red);
+      }
+
+      .bg-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        animation: fadeIn 0.8s ease-in-out;
+      }
+
+      .page.active {
+        display: flex;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 90%;
+        width: 400px;
+      }
+
+      /* Interactive Checklist */
+      .pledge-list {
+        text-align: left;
+        margin: 20px 0;
+        list-style: none;
+        padding: 0;
+      }
+
+      /* .pledge-item {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        font-size: 0.95rem;
+        cursor: pointer;
+      }
+
+      .pledge-item input {
+        margin-right: 15px;
+        width: 20px;
+        height: 20px;
+        accent-color: var(--deep-red);
+      } */
+
+      .pledge-item {
+        display: flex;
+        align-items: flex-start; /* important */
+        gap: 12px;
+        line-height: 1.4;
+      }
+
+      .pledge-item input[type="checkbox"] {
+        margin-top: 3px; /* aligns checkbox visually */
+        min-width: 20px;
+        min-height: 20px;
+        flex-shrink: 0;
+      }
+
+      .btn-next {
+        background: var(--deep-red);
+        color: white;
+        padding: 15px 35px;
+        border-radius: 50px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 10px;
+      }
+
+      /* Final Page Special Style */
+      .finale {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: white;
+        border: 3px solid var(--gold);
+      }
+
+      .photo-space {
+        width: 100%;
+        height: 120px;
+        background: #fdf0f0;
+        border-radius: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #cc8e8e;
+        border: 1px dashed var(--primary-pink);
+      }
+      .photo-space-bday {
+        width: 100%;
+        height: 320px;
+        background: #fdf0f0;
+        border-radius: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #cc8e8e;
+        border: 1px dashed var(--primary-pink);
+      }
+      .photo-space-shadi {
+        width: 100%;
+        height: 200px;
+        background: #fdf0f0;
+        border-radius: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #cc8e8e;
+        border: 1px dashed var(--primary-pink);
+      }
+      .photo-space-madhuban {
+        width: 100%;
+        height: 300px;
+        background: #fdf0f0;
+        border-radius: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #cc8e8e;
+        border: 1px dashed var(--primary-pink);
+      }
+      .photo-space-more {
+        width: 100%;
+        height: 350px;
+        background: #fdf0f0;
+        border-radius: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #cc8e8e;
+        border: 1px dashed var(--primary-pink);
+      }
+      .photo-space-moree {
+        width: 100%;
+        height: 450px;
+        background: #fdf0f0;
+        border-radius: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #cc8e8e;
+        border: 1px dashed var(--primary-pink);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .celebration {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        animation-fill-mode: forwards;
+      }
+
+      .fire {
+        animation: firework 1.5s ease-out forwards;
+      }
+
+      .flower {
+        animation: flowerFall 3s linear forwards;
+      }
+
+      @keyframes firework {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-300px) scale(1.6);
+          opacity: 0;
+        }
+      }
+
+      @keyframes flowerFall {
+        0% {
+          transform: translateY(-50px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh);
+          opacity: 0;
+        }
+      }
+      .celebration-image {
+        width: 100%;
+        height: 280px;
+        margin: 20px 0;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 2px solid var(--gold);
+      }
+
+      .celebration-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas class="bg-hearts" id="heartCanvas"></canvas>
+
+    <div class="page active" id="p1">
+      <h1 style="font-size: 3.5rem">Hey Love...</h1>
+      <p>A small part of my love and memories for you Jaan❤️</p>
+      <button class="btn-next" onclick="nextPage(2)">Open My Heart ❤️</button>
+    </div>
+
+    <div class="page" id="p2">
+      <div class="card scroll-card">
+        <h2>A Belated Wish...</h2>
+        <p>
+          Tumhare Birthday ke din to sb ache se wish kar nahi paya due to our
+          fight i'm sooooo sorry my jaan.<br /><br />
+          But today i want to tell you i'm soo lucky to have you because of that
+          day only so that day is one of the mosttt special days for me.<br /><br />
+          Sooo Happpyyyyyy Birthday my Jaan, My SweetHeart, My Love, My Babyy,
+          My Sonaa, My Rasgulla, My Devi ji, My wifeyy, My Chotuu sa bachaa, My
+          Cutiee, My Hotieee, my Mosttt beautyfull, My MissWorld, My miss
+          Perfect, My HeartBeat, My Ardhangani, My life, My Everythingg❤️.
+        </p>
+        <h3 style="margin: 10px 0">Happy Belated Birthday, My Queen!</h3>
+        <div class="photo-space-bday"><img src="img1.jpg" alt="" /></div>
+        <button class="btn-next" onclick="nextPage(3)">Our Journey →</button>
+      </div>
+    </div>
+
+    <div class="page" id="p3">
+      <div class="card scroll-card">
+        <h2>Vo Shadi ke Mandap se abhi tak ka safar</h2>
+        <div class="photo-space-shadi"><img src="img2.jpg" alt="" /></div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Vo Shadi ke Madap me hatho me hath lake ek duje ke hona bina kisi
+          soch cinta ke.Remember kaise sbke same bs ek dusre me khoo gye the and
+          sbkee samne hath pakad ke ek dusre pe fool fek rhe the. That was not
+          just a coincidence it was our destiny!!"
+        </p>
+        <br />
+        <div class="photo-space-shadi"><img src="img25.jpg" alt="" /></div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Yeh food crunch ki choti se date zyada jante to nahi pr itnaa apna
+          paan aur pyaar dono ke cehre se muskan hi nahi jaa rhi thi. Na kehte
+          hue bhi jatata hua pyar tha ek alag si khushi thi"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_madhuban.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Yaad hai yeh din kese mai tumhe apne hatho se khila rha tha tumhe naa
+          psnd hote hue bs isliyea bina btye kha ki li kyuki mai apne hatho se
+          khila rha tha aur vo din shyd pehli baar ho jab aise tum mere kandhe
+          par sir laga ke bahh pakad ke baithi thi kesee btauu kitnaa vo kuch
+          paal zaruri ban gyaa h"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_uoi.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Jis mukan se khushi se excitement se tum mujhe dekhti ho bhle lakhh
+          inkar kar lo pr tumhri akhe chila chila ke kehti h tumhe kitnaa pyarr
+          h mujhse. Tumhari akhoo me cehcre me jo pyar jhalakta h n mujhe dekhe
+          ke duniya ki sarii khushia kam hai uska same."
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_beauty_simple.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Tumhare aise sadgi se bhare chere me muskan dekh ke maan karta h bs
+          tumhee dekhtee hi rhu pr fir bhi kitnaaa bhi dekh lu maan hi nahi
+          bhartaa. Hyee yeh adayy hyee yeh muskan hyeee yeh lali lagee hue
+          hathh. Sacchh me tum itniiiiiii khoobsurat kaiseeeee ho"
+        </p>
+        <br />
+        <div class="photo-space-more">
+          <img src="img_eye_ear.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Bina koi sringar ke bhi tum itniii khubbsoorat ho aur uper se yeh kal
+          aur tumhre kaano ki ballii. Jii chata h bs tumhari akhooo me khoo jau
+          aur har vo hasii lamhee yaad kru hmara ladana jhagdna pyar kanra
+          ruthna maana ek dujjeee ke hona."
+        </p>
+        <br />
+        <div class="photo-space">
+          <img src="img_lip.png" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Ras malai se raseele yeh lips tumhare and uspe se tapakti chansii and
+          btw i like rasmalai too much😅. Aur sb to thikkk h pr tumhe kisss
+          karee bina kaise rahaa jayee meri jaan❤️"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_hair.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Hyee yeh tumhari muskan aur uspe se yeh zulfee tumharii jaan hi le
+          lenge is jaan ki tumharii. Jab kehti ho n baal katana hai to maan me
+          aata h itniiiiii sundar itniii khubsoort fir kyuuu aise sawall. Mt
+          karana chote baal na aisee hi bohtttt sundarr ho."
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_feet.jpeg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Yeh pair tumhare intzarr h kab is ghr ki laxmi bane ke apne kadam lao
+          is ghr me. Bs kehne ko nahi sach me tumhre gadmo ka itna intzarr hai n
+          tum soch bhi nahi skti. Baki personal to you know na 😅."
+        </p>
+        <br />
+        <div class="photo-space-more">
+          <img src="img_hand.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Isi trh ek din hmarai shadi ke jodi me hogi tum aise hi chudii aur
+          mere naam ki mehandi me hogi tum. Us din hm ek dusre ka hath thame
+          sbko glt sabit krke dikhyne ek dujee ke hoke. Proudly holding your
+          hand and saying she is myy Anuuu."
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_kamar.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Hyee tumhare yeh tumhaari adayee aur yeh tumhrai kamar kaisee na
+          behkee mera maan. Akh band krke socho to khayal aata h kab shadii ho
+          aise shadi me photos me hi mera hath tumhare kamar pe hoga"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_mmehndi.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Yaad h yeh mehndi kese tum likh ke khushi hui thi pr fir aise ise
+          chupane ke liyea kitnaa kuchh. Intzar h us din ka jab sbkse samne haak
+          se jata ke mere naam ki mehndi ho tumhre hatho me"
+        </p>
+        <br />
+        <div class="photo-space-more">
+          <img src="img_mandir.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Jabhi aise kahi ghumne jane ki baat ho tumhre maan me pehli baat hoti
+          h sath mandir jaana. Chlogi n sath mere mandir hath tham ke ek jiwan
+          sathi ki trh jabhi kahi ghumne jane ki baat ho"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_red.png" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Mere sath jo tum bachi ban ke rehti ho hmesha tumra yeh bachpan
+          mujhme basa ke rakhna h. Tum jo aise sharmati ho aise hi tumhe is ghr
+          me bahu bana ke lana hai"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_white.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Aise jo tum mujhe dekhti ho tumhre akho ki chamak tumhare hoto ki
+          musakan dekh ke maan kehta h Yeh chere ki muskan teri baan gai hai
+          jaan meri."
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_flower.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Tumhare hatho ke yeh phool dekh ke khayal aata hai kab in hatho me
+          hmari shadi ki vermala ho aur akho me vo ek hone ki khushii"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_doremon.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Kehti to tum mujhe doremon ho pr tum bhi meri uthii hi doremonn ho
+          cutiee problem solve krna zaruri nahi pr sath dena hai aur tumhe
+          hmesha mera sath diyea h kabhi akle nahi choraa"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_devi.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Tum bs ek stree nahi devii ho meri ghar ki laxmi meri satii ho tum"
+        </p>
+        <br />
+        <div class="photo-space-moree">
+          <img src="img_yellow.png" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Yeh school ke function se lake hamari shadi ke jode tak ka safar sath
+          tay karna hai aur aise hi sath chaath puja krna h"
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_puja.png" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "Vo jiske darshan ke liyea sb intzar me the vo taiyar hoke sbse phle
+          mere paas aana. That was really soo soo soo special like devi duniya
+          ki meri Anuu h and the way you call me prabhu you prove that too ki
+          duniya se phle devi apne prabhu ki h."
+        </p>
+        <br />
+        <div class="photo-space-madhuban">
+          <img src="img_queen.jpg" alt="" />
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic">
+          "You are not just any other girl you are my Queen my Anuu"
+        </p>
+        <br />
+        <button class="btn-next" onclick="nextPage(4)">Our wishlist</button>
+      </div>
+    </div>
+
+    <div class="page" id="p4">
+      <div class="card scroll-card">
+        <h2>Kyaa mera sath aur yeh sb chizee ek sath krogi tum?</h2>
+        <p>Nayee saal me fir ek mai aur tum Hum hoke</p>
+        <p>Yeh kuch sapne aur khwaishee hm dono ki</p>
+        <div class="pledge-list">
+          <label class="pledge-item"
+            ><input type="checkbox" />Sath mandir jana
+          </label>
+          <label class="pledge-item"
+            ><input type="checkbox" /> Pdhi aur carrier me best bane ke dikhana
+          </label>
+          <label class="pledge-item"
+            ><input type="checkbox" /> silai aur fashion design sikhna</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Art and craft sikhna</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Cooking to aati hi h aur dishes
+            sikhna</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Drawing and painting sikhna</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Hair style and mehandi sikhna</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Exercise aur health ka dhyn rakhn</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Mosttt imp time se khana
+          </label>
+          <label class="pledge-item"
+            ><input type="checkbox" />Sundar to tum ho hi pr aise tumhri wish
+            glass like skin and more beauty full</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Sundar to tum ho hi pr aise tumhri wish
+            glass like skin and more beauty full</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />For me tumhre liyea dhreeeer sare gifts
+            lana</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Ek dusre ko dhreerrr sara pyarrr aur time
+            aur priorty denaa</label
+          >
+          <label class="pledge-item"
+            ><input type="checkbox" />Bhale thoda ladee pr fir ek dusre ko
+            samjhana maanana aur sath jine ka wadaa nibhana</label
+          >
+        </div>
+        <p>Aurr bhi bohttttttttt kuch milke list banyngee</p>
+        <button class="btn-next" onclick="validatePledges()">
+          Step Into The New Year →
+        </button>
+      </div>
+    </div>
+
+    <div class="page" id="p5">
+      <div class="card finale">
+        <h1 style="color: var(--gold); margin: 0">Happy New Year 2026</h1>
+        <p>
+          This isn't just a new year; it's another 365 days and rest of my life
+          of me being the luckiest man to have you as my wife.
+        </p>
+        <hr
+          style="
+            border: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 20px 0;
+          "
+        />
+        <p style="font-weight: 600; font-size: 1.1rem">My Promise to You:</p>
+        <p>
+          To be by your side through every high and low, to fulfill all our
+          dreams together, and to love you more with every passing second.
+          Chahee luchh bhi ho jaye kesee bhi halat ho mai hmesha tumhari side hu
+          aur tumhra sath dunga between you and world i will be standing my dear
+        </p>
+        <h2 style="color: var(--gold)">Forever & Always. ❤️</h2>
+        <button
+          class="btn-next"
+          style="background: var(--gold); color: #1a1a2e"
+          onclick="confettiEffect()"
+        >
+          I Love You!
+        </button>
+        <button
+          class="btn-next"
+          style="
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            margin-top: 15px;
+          "
+          onclick="showLoveChoice()"
+        >
+          Do you love me? 💛
+        </button>
+
+        <div id="loveChoice" style="display: none; margin-top: 15px">
+          <button class="btn-next" onclick="goToCelebration()">Yes 😘</button>
+          <button class="btn-next" onclick="goToCelebration()">Yes ❤️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="p6">
+      <div class="card finale">
+        <h1 style="color: var(--gold)">
+          Haa kaha hai to yaha tak pouch ke hi dikhana ❤️
+        </h1>
+        <div class="celebration-image">
+          <img src="final.png" alt="Our Moment" />
+        </div>
+
+        <p>And this moment deserves all the celebration in the world</p>
+        <p>Aaj se forver tak we are one</p>
+        <h2 style="color: var(--gold)">
+          Forever Already Starts bohtt pehlee ✨
+        </h2>
+        <h2 style="color: var(--gold)">Happy New Year Love❤️</h2>
+      </div>
+    </div>
+
+    <script>
+      function nextPage(num) {
+        document
+          .querySelectorAll(".page")
+          .forEach((page) => page.classList.remove("active"));
+        document.getElementById("p" + num).classList.add("active");
+      }
+
+      function confettiEffect() {
+        alert("To many more years of us! I love you! ❤️");
+      }
+
+      // Heart Background Animation
+      const canvas = document.getElementById("heartCanvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const hearts = [];
+      function createHeart() {
+        return {
+          x: Math.random() * canvas.width,
+          y: canvas.height + 10,
+          size: Math.random() * 15 + 10,
+          speed: Math.random() * 1.5 + 0.5,
+          opacity: Math.random() * 0.5 + 0.2,
+        };
+      }
+
+      function drawHearts() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        hearts.forEach((h, i) => {
+          h.y -= h.speed;
+          ctx.globalAlpha = h.opacity;
+          ctx.font = `${h.size}px serif`;
+          ctx.fillText("❤️", h.x, h.y);
+          if (h.y < -20) hearts[i] = createHeart();
+        });
+        requestAnimationFrame(drawHearts);
+      }
+
+      for (let i = 0; i < 25; i++) hearts.push(createHeart());
+      drawHearts();
+    </script>
+    <script>
+      function validatePledges() {
+        const checkboxes = document.querySelectorAll(
+          "#p4 .pledge-item input[type='checkbox']"
+        );
+
+        let allChecked = true;
+
+        checkboxes.forEach((cb) => {
+          if (!cb.checked) {
+            allChecked = false;
+          }
+        });
+
+        if (!allChecked) {
+          alert(
+            "💔 Kuch khwaishee abhi baaki hain… pehle sab complete karo jaan ❤️"
+          );
+          return;
+        }
+
+        // if all checked, move forward
+        nextPage(5);
+      }
+    </script>
+    <script>
+      function showLoveChoice() {
+        document.getElementById("loveChoice").style.display = "block";
+      }
+
+      function goToCelebration() {
+        nextPage(6);
+        startCelebration();
+      }
+
+      function startCelebration() {
+        // Fire crackers
+        for (let i = 0; i < 30; i++) {
+          const fire = document.createElement("div");
+          fire.className = "celebration fire";
+          fire.innerText = "✨";
+          fire.style.left = Math.random() * window.innerWidth + "px";
+          fire.style.bottom = "0px";
+          fire.style.fontSize = "22px";
+          document.body.appendChild(fire);
+
+          setTimeout(() => fire.remove(), 1500);
+        }
+
+        // Flower rain
+        for (let i = 0; i < 35; i++) {
+          const flower = document.createElement("div");
+          flower.className = "celebration flower";
+          flower.innerText = "🌸";
+          flower.style.left = Math.random() * window.innerWidth + "px";
+          flower.style.top = "-40px";
+          flower.style.fontSize = "26px";
+          document.body.appendChild(flower);
+
+          setTimeout(() => flower.remove(), 3000);
+        }
+      }
+    </script>
+  </body>
+</html>
